@@ -90,7 +90,7 @@ public class ImplementationArgumentsProvider implements ArgumentsProvider, Annot
     @NotNull
     private static Arguments prepend(Map.Entry<String, Object> variant, Arguments arg) {
         return Arguments.of(combine(
-            new Object[]{variant.getKey(), variant.getValue()},
+            new Object[]{Implementation.of(variant)},
             arg.get()
         ));
     }
