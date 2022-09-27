@@ -32,36 +32,14 @@ public class FizzBuzzSumBench {
     private int lim;
 
     @Param
-    private Variant variant;
+    private FizzBuzzSum.Implementation variant;
 
     @Benchmark
     public void benchmark(Blackhole bh) {
         try (var out = new PrintStream(new NullOutputStream())) {
-            variant.check.exec(out, min, max, lim);
+            variant.calculate(out, min, max, lim);
             bh.consume(out);
         }
-    }
-
-    private static final FizzBuzzSum INSTANCE = new FizzBuzzSum();
-
-    public enum Variant {
-        naive(INSTANCE::naive),
-        simple(INSTANCE::simple),
-        summationDancing(INSTANCE::summationDancing),
-        pin2t(INSTANCE::pin2t),
-        igolikov(INSTANCE::igolikov),
-        rombell(INSTANCE::rombell),
-        ;
-        private final Check check;
-
-        Variant(Check check) {this.check = check;}
-    }
-
-    @FunctionalInterface
-    private interface Check {
-
-        void exec(PrintStream out, int min, int max, int lim);
-
     }
 
 }

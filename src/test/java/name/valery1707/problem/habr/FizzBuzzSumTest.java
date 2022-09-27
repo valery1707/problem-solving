@@ -27,21 +27,6 @@ class FizzBuzzSumTest {
 
     private static final String SOURCE = "/habr/fizzBuzzSum.csv";
 
-    private static final FizzBuzzSum INSTANCE = new FizzBuzzSum();
-
-    private enum Variant {
-        naive(INSTANCE::naive),
-        simple(INSTANCE::simple),
-        summationDancing(INSTANCE::summationDancing),
-        pin2t(INSTANCE::pin2t),
-        igolikov(INSTANCE::igolikov),
-        rombell(INSTANCE::rombell),
-        ;
-        private final Check check;
-
-        Variant(Check check) {this.check = check;}
-    }
-
     private static final Set<String> TOO_BOUNDED = Set.of(new String[]{
         "pin2t(0, 100000, 20)",
         "rombell(0, 1000, 20)",
@@ -50,11 +35,11 @@ class FizzBuzzSumTest {
 
     @ParameterizedTest(name = "[{index}] Run {0} variant with range [{2} .. {3}] and limit {4}")
     @MethodSource("test1")
-    void test1(String name, Check check, int min, int max, int lim, String expected) throws IOException {
+    void test1(String name, FizzBuzzSum check, int min, int max, int lim, String expected) throws IOException {
         name = String.format("%s(%d, %d, %d)", name, min, max, lim);
         try (var stream = new ByteArrayOutputStream()) {
             var out = new PrintStream(stream, false, UTF_8);
-            assertThatCode(() -> check.exec(out, min, max, lim)).doesNotThrowAnyException();
+            assertThatCode(() -> check.calculate(out, min, max, lim)).doesNotThrowAnyException();
             out.flush();
             if (TOO_BOUNDED.contains(name)) {
                 assertThat(stream.toString(UTF_8)).as(name).isNotEqualToNormalizingWhitespace(expected);
@@ -75,16 +60,9 @@ class FizzBuzzSumTest {
             .skip(1)
             .map(it -> it.split("\\|"))
             .map(it -> new Object[]{parseInt(it[0]), parseInt(it[1]), parseInt(it[2]), it[3].replace(",", lineSeparator())})
-            .flatMap(args -> Stream.of(Variant.values()).map(variant ->
-                arguments(variant.name(), variant.check, args[0], args[1], args[2], args[3])
+            .flatMap(args -> Stream.of(FizzBuzzSum.Implementation.values()).map(variant ->
+                arguments(variant.name(), variant, args[0], args[1], args[2], args[3])
             ));
-    }
-
-    @FunctionalInterface
-    private interface Check {
-
-        void exec(PrintStream out, int min, int max, int lim);
-
     }
 
 }
