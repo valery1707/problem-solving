@@ -1,9 +1,12 @@
 plugins {
   kotlin("jvm") version "1.6.21"
+  id("me.champeau.jmh") version "0.6.6"
 }
 
 group = "name.valery1707"
 version = "0.1.0-SNAPSHOT"
+
+val jmhVersionCust = "1.35"
 
 java {
   sourceCompatibility = JavaVersion.VERSION_17
@@ -21,6 +24,8 @@ dependencies {
   testImplementation(kotlin("test"))
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.6.0")
   testImplementation("org.assertj:assertj-core:3.22.0")
+
+  jmhAnnotationProcessor("org.openjdk.jmh:jmh-generator-annprocess:$jmhVersionCust")
 }
 
 //Encoding
@@ -39,4 +44,9 @@ tasks.test {
   testLogging {
     events("passed", "skipped", "failed")
   }
+}
+
+jmh {
+  //https://github.com/melix/jmh-gradle-plugin#configuration-options
+  jmhVersion.set(jmhVersionCust)
 }
