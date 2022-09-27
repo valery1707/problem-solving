@@ -63,5 +63,50 @@ public class FizzBuzzSum {
         return res;
     }
 
+    /**
+     * @see <a href="https://habr.com/ru/company/skillbox/blog/689226/comments/#comment_24755092">Вариант пользователя pin2t</a>
+     */
+    public void pin2t(PrintStream out, int min, int max, int lim) {
+        for (int i = min; i < max; i++) {
+            if (i % 3 == 0 && i % 5 != 0 && (i / 100 + (i / 10) % 10 + i % 10) < lim) {
+                out.println(i);
+            }
+        }
+    }
+
+    /**
+     * <a href="https://habr.com/ru/company/skillbox/blog/689226/comments/#comment_24753678">Вариант пользователя igolikov</a>
+     */
+    public void igolikov(PrintStream out, int min, int max, int lim) {
+        for (int i = min; i <= max; i += 3) {
+            if (i % 5 != 0 && checkDigitsSum(i, lim)) {
+                out.println(i);
+            }
+        }
+    }
+
+    private boolean checkDigitsSum(int i, int lim) {
+        int sum = 0;
+        while (i > 0 && sum < lim) {
+            sum += i % 10;
+            i = i / 10;
+        }
+        return sum < lim;
+    }
+
+    /**
+     * <a href="https://habr.com/ru/company/skillbox/blog/689226/comments/#comment_24767738">Вариант пользователя rombell</a>
+     */
+    public void rombell(PrintStream out, int min, int max, int lim) {
+        int[] list = {3, 6, 9, 12};
+        for (int i = min; i < max; i += 15) {
+            for (int j = 0; j < 4; j++) {
+                int curr = i + list[j];
+                if (curr / 100 + curr / 10 % 10 + curr % 10 < lim) {
+                    out.println(curr);
+                }
+            }
+        }
+    }
 
 }

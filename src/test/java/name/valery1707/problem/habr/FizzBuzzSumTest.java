@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.lang.Integer.parseInt;
@@ -32,21 +33,34 @@ class FizzBuzzSumTest {
         naive(INSTANCE::naive),
         simple(INSTANCE::simple),
         summationDancing(INSTANCE::summationDancing),
+        pin2t(INSTANCE::pin2t),
+        igolikov(INSTANCE::igolikov),
+        rombell(INSTANCE::rombell),
         ;
         private final Check check;
 
         Variant(Check check) {this.check = check;}
     }
 
+    private static final Set<String> TOO_BOUNDED = Set.of(new String[]{
+        "pin2t(0, 100000, 20)",
+        "rombell(0, 1000, 20)",
+        "rombell(0, 100000, 20)",
+    });
 
     @ParameterizedTest(name = "[{index}] Run {0} variant with range [{2} .. {3}] and limit {4}")
     @MethodSource("test1")
     void test1(String name, Check check, int min, int max, int lim, String expected) throws IOException {
+        name = String.format("%s(%d, %d, %d)", name, min, max, lim);
         try (var stream = new ByteArrayOutputStream()) {
             var out = new PrintStream(stream, false, UTF_8);
             assertThatCode(() -> check.exec(out, min, max, lim)).doesNotThrowAnyException();
             out.flush();
-            assertThat(stream.toString(UTF_8)).as(name).isEqualToIgnoringNewLines(expected);
+            if (TOO_BOUNDED.contains(name)) {
+                assertThat(stream.toString(UTF_8)).as(name).isNotEqualToNormalizingWhitespace(expected);
+            } else {
+                assertThat(stream.toString(UTF_8)).as(name).isEqualToNormalizingWhitespace(expected);
+            }
         }
     }
 

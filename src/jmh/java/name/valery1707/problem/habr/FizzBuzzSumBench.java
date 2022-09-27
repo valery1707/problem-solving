@@ -48,6 +48,9 @@ public class FizzBuzzSumBench {
         naive(INSTANCE::naive),
         simple(INSTANCE::simple),
         summationDancing(INSTANCE::summationDancing),
+        pin2t(INSTANCE::pin2t),
+        igolikov(INSTANCE::igolikov),
+        rombell(INSTANCE::rombell),
         ;
         private final Check check;
 
