@@ -45,8 +45,9 @@ public class FizzBuzzSumBench {
     private static final FizzBuzzSum INSTANCE = new FizzBuzzSum();
 
     public enum Variant {
-        NAIVE(INSTANCE::naive),
-        SIMPLE(INSTANCE::simple),
+        naive(INSTANCE::naive),
+        simple(INSTANCE::simple),
+        summationDancing(INSTANCE::summationDancing),
         ;
         private final Check check;
 

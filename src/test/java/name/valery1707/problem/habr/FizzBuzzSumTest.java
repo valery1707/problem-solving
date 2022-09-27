@@ -29,8 +29,9 @@ class FizzBuzzSumTest {
     private static final FizzBuzzSum INSTANCE = new FizzBuzzSum();
 
     private enum Variant {
-        NAIVE(INSTANCE::naive),
-        SIMPLE(INSTANCE::simple),
+        naive(INSTANCE::naive),
+        simple(INSTANCE::simple),
+        summationDancing(INSTANCE::summationDancing),
         ;
         private final Check check;
 
@@ -38,7 +39,7 @@ class FizzBuzzSumTest {
     }
 
 
-    @ParameterizedTest(name = "[{index}] Run {0} variant with range [{2}..{3}] and limit {4}")
+    @ParameterizedTest(name = "[{index}] Run {0} variant with range [{2} .. {3}] and limit {4}")
     @MethodSource("test1")
     void test1(String name, Check check, int min, int max, int lim, String expected) throws IOException {
         try (var stream = new ByteArrayOutputStream()) {
@@ -61,7 +62,7 @@ class FizzBuzzSumTest {
             .map(it -> it.split("\\|"))
             .map(it -> new Object[]{parseInt(it[0]), parseInt(it[1]), parseInt(it[2]), it[3].replace(",", lineSeparator())})
             .flatMap(args -> Stream.of(Variant.values()).map(variant ->
-                arguments(variant.name().toLowerCase(), variant.check, args[0], args[1], args[2], args[3])
+                arguments(variant.name(), variant.check, args[0], args[1], args[2], args[3])
             ));
     }
 
