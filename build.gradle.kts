@@ -34,4 +34,7 @@ tasks.withType<Javadoc> {
 
 tasks.test {
   useJUnitPlatform()
+  testLogging {
+    events("passed", "skipped", "failed")
+  }
 }
