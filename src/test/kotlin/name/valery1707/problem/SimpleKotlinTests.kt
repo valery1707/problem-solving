@@ -7,5 +7,6 @@ class SimpleKotlinTests {
     @Test
     internal fun test1() {
         assertThat("").isBlank
+        assertThat(listOf("1")).hasSize(1)
     }
 }
