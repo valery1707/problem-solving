@@ -35,7 +35,7 @@ public class ImplementationArgumentsProvider implements ArgumentsProvider, Annot
         .collect(toUnmodifiableSet());
 
     private Map<String, Object> variants;
-    private Set<Annotation> args;
+    private Set<ArgumentsProvider> args;
 
     @Override
     public void accept(ImplementationSource config) {
@@ -45,15 +45,17 @@ public class ImplementationArgumentsProvider implements ArgumentsProvider, Annot
         this.args = ARGS_PROVIDERS.stream()
             .flatMap(arg -> arg.apply(config))
             .filter(arg -> arg.annotationType().isAnnotationPresent(ArgumentsSource.class))
+            .map(ImplementationArgumentsProvider::buildArgumentsProvider)
             .collect(toUnmodifiableSet());
     }
 
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
-        return args.stream()
-            .map(ImplementationArgumentsProvider::buildArgumentsProvider)
-            .flatMap(arg -> provideArguments(arg, context))
-            .flatMap(arg -> variants.entrySet().stream().map(variant -> prepend(variant, arg)));
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+        return variants.entrySet().stream()
+            .flatMap(variant -> args.stream()
+                .flatMap(arg -> provideArguments(arg, context))
+                .map(arg -> prepend(variant, arg))
+            );
     }
 
     @NotNull
