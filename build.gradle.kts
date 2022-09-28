@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
   testImplementation(kotlin("test"))
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.6.0")
+  testImplementation("org.junit.jupiter:junit-jupiter-params")
   testImplementation("org.assertj:assertj-core:3.23.1")
 
   jmhAnnotationProcessor("org.openjdk.jmh:jmh-generator-annprocess:$jmhVersionCust")
