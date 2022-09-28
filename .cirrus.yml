@@ -1,0 +1,17 @@
+check_task:
+  container:
+    image: gradle:jdk17
+  gradle_cache:
+    folder: ~/.gradle/caches
+  check_script: ./gradlew check
+  gradle_cache_cleanup_nondeterministic_files_script:
+    - rm -rf ~/.gradle/caches/$GRADLE_VERSION/
+    - rm -rf ~/.gradle/caches/transforms-1
+    - rm -rf ~/.gradle/caches/journal-1
+    - rm -rf ~/.gradle/caches/jars-3/*/buildSrc.jar
+    - find ~/.gradle/caches/ -name "*.lock" -type f -delete
+  always:
+    junit_result_artifacts:
+      path: "**/test-results/**/*.xml"
+      format: junit
+      type: text/xml
