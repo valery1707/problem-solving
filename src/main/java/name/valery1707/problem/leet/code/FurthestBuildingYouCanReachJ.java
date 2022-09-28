@@ -1,5 +1,6 @@
 package name.valery1707.problem.leet.code;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -50,6 +51,57 @@ public interface FurthestBuildingYouCanReachJ {
                             //То считаем что на самый большой предыдущий пролёт мы использовали лестницу
                             ladders--;
                             bricks += usedBricks.poll();
+                        } else {
+                            //Лестниц нет - путешествие закончено
+                            return index;
+                        }
+                    }
+                }
+                //Смогли дойти до конца
+                return maxIndex;
+            }
+        },
+
+        /**
+         * Попытка оптимизировать по памяти:
+         * <ul>
+         * <li>{@code int[]} должен быть эффективнее по памяти по сравнению с {@code Object[]} внутри {@link PriorityQueue}</li>
+         * <li>при использовании {@code int[]} не будет требоваться боксинг</li>
+         * </ul>
+         * <p>
+         * На LeetCode умирает из-за превышения времени выполнения.
+         */
+        array {
+            @Override
+            public int furthestBuilding(int[] heights, int bricks, int ladders) {
+                var usedBricksValues = new int[8];
+                var usedBricksCount = 0;
+                int maxIndex = heights.length - 1;
+                for (int index = 0; index < maxIndex; index++) {
+                    var diff = heights[index + 1] - heights[index];
+                    if (diff <= 0) {
+                        continue;
+                    }
+                    //Всегда используем кирпичи
+                    if (usedBricksCount == usedBricksValues.length) {
+                        usedBricksValues = Arrays.copyOf(usedBricksValues, usedBricksCount < 64 ? usedBricksCount * 2 : (int) (usedBricksCount * 1.5));
+                        Arrays.sort(usedBricksValues);
+                    }
+                    //Заполняем с конца для учёта дальнейшей сортировки
+                    usedBricksValues[usedBricksValues.length - 1 - usedBricksCount++] = diff;
+                    bricks -= diff;
+                    //Если кирпичей не хватило
+                    if (bricks < 0) {
+                        //И есть лестницы
+                        if (ladders > 0) {
+                            //То считаем что на самый большой предыдущий пролёт мы использовали лестницу
+                            ladders--;
+                            //Нули выходят в начало
+                            Arrays.sort(usedBricksValues);
+                            bricks += usedBricksValues[usedBricksValues.length - 1];
+                            usedBricksCount--;
+                            usedBricksValues[usedBricksValues.length - 1] = 0;
+                            Arrays.sort(usedBricksValues);
                         } else {
                             //Лестниц нет - путешествие закончено
                             return index;
