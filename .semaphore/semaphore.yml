@@ -1,0 +1,23 @@
+version: v1.0
+name: Java
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+blocks:
+  - name: Gradle
+    task:
+
+      jobs:
+        - name: Check
+          commands:
+            - sem-version java 17
+            - checkout
+            - ./gradlew classes testClasses jmhClasses
+            - ./gradlew check
+
+      epilogue:
+        always:
+          commands:
+            - test-results publish build/test-results/test/
+            - test-results gen-pipeline-report
