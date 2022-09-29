@@ -1,6 +1,6 @@
 plugins {
   kotlin("jvm") version "1.7.10"
-  id("me.champeau.jmh") version "0.6.6"
+  id("me.champeau.jmh") version "0.6.8"
 }
 
 group = "name.valery1707"
