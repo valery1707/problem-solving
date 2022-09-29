@@ -1,6 +1,7 @@
 package name.valery1707.problem.habr;
 
 import java.io.PrintStream;
+import java.util.stream.IntStream;
 
 /**
  * Написать код, который выводит числа от 0 до 1000, которые делятся на 3, но не делятся на 5, и сумма цифр в которых меньше десяти.
@@ -136,6 +137,30 @@ public interface FizzBuzzSum {
                         }
                     }
                 }
+            }
+        },
+
+        OldmanKvint_original {
+            @Override
+            public void calculate(PrintStream out, int min, int max, int lim) {
+                IntStream.range(min, max)
+                    .boxed()
+                    .filter(i -> i % 3 == 0 && i % 5 != 0
+//                        && String.valueOf(i).length() > 1//Ошибка в реализации
+                        && String.valueOf(i).chars().mapToObj(c -> Integer.valueOf("" + (char) c)).reduce(0, Integer::sum) < lim
+                    )
+                    .forEach(out::println);
+            }
+        },
+
+        OldmanKvint_optimized {
+            @Override
+            public void calculate(PrintStream out, int min, int max, int lim) {
+                IntStream.range(min, max)
+                    .filter(i -> i % 3 == 0 && i % 5 != 0
+                        && String.valueOf(i).chars().map(Character::getNumericValue).sum() < lim
+                    )
+                    .forEach(out::println);
             }
         },
     }
