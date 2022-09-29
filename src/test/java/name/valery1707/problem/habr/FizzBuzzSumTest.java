@@ -1,5 +1,7 @@
 package name.valery1707.problem.habr;
 
+import name.valery1707.problem.junit.Implementation;
+import name.valery1707.problem.junit.ImplementationSource;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -20,7 +22,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.function.Function.identity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SuppressWarnings("scwtestingjunit5_JUnitMixeduseofJUnitversions")
 class FizzBuzzSumTest {
@@ -33,13 +34,16 @@ class FizzBuzzSumTest {
         "rombell(0, 100000, 20)",
     });
 
-    @ParameterizedTest(name = "[{index}] Run {0} variant with range [{2} .. {3}] and limit {4}")
-    @MethodSource("test1")
-    void test1(String name, FizzBuzzSum check, int min, int max, int lim, String expected) throws IOException {
-        name = String.format("%s(%d, %d, %d)", name, min, max, lim);
+    @ParameterizedTest(name = "[{index}] Run {0} variant with range [{1} .. {2}] and limit {3}")
+    @ImplementationSource(
+        implementation = FizzBuzzSum.Implementation.class,
+        method = @MethodSource("test1")
+    )
+    void test1(Implementation<FizzBuzzSum> variant, int min, int max, int lim, String expected) throws IOException {
+        String name = String.format("%s(%d, %d, %d)", variant.name(), min, max, lim);
         try (var stream = new ByteArrayOutputStream()) {
             var out = new PrintStream(stream, false, UTF_8);
-            assertThatCode(() -> check.calculate(out, min, max, lim)).doesNotThrowAnyException();
+            assertThatCode(() -> variant.get().calculate(out, min, max, lim)).doesNotThrowAnyException();
             out.flush();
             if (TOO_BOUNDED.contains(name)) {
                 assertThat(stream.toString(UTF_8)).as(name).isNotEqualToNormalizingWhitespace(expected);
@@ -50,19 +54,17 @@ class FizzBuzzSumTest {
     }
 
     private static Stream<Arguments> test1() {
-        var lines = Optional.ofNullable(FizzBuzzSumTest.class.getResource(SOURCE))
+        //expected too long for @CsvFileSource which allow only 4097
+        return Optional.ofNullable(FizzBuzzSumTest.class.getResource(SOURCE))
             .flatMap(it -> Try.call(it::toURI).toOptional())
             .map(Path::of)
             .filter(Files::exists)
             .flatMap(it -> Try.call(() -> Files.lines(it, UTF_8)).toOptional())
-            .stream().flatMap(identity());
-        return lines
+            .stream().flatMap(identity())
             .skip(1)
             .map(it -> it.split("\\|"))
             .map(it -> new Object[]{parseInt(it[0]), parseInt(it[1]), parseInt(it[2]), it[3].replace(",", lineSeparator())})
-            .flatMap(args -> Stream.of(FizzBuzzSum.Implementation.values()).map(variant ->
-                arguments(variant.name(), variant, args[0], args[1], args[2], args[3])
-            ));
+            .map(Arguments::of);
     }
 
 }
