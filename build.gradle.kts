@@ -1,6 +1,7 @@
 plugins {
   kotlin("jvm") version "1.7.10"
   id("me.champeau.jmh") version "0.6.8"
+  id("com.palantir.consistent-versions") version "2.11.0"
 }
 
 group = "name.valery1707"
@@ -22,9 +23,9 @@ repositories {
 
 dependencies {
   testImplementation(kotlin("test"))
-  testImplementation(platform("org.junit:junit-bom:5.9.1"))
+  testImplementation(platform("org.junit:junit-bom"))
   testImplementation("org.junit.jupiter:junit-jupiter-params")
-  testImplementation("org.assertj:assertj-core:3.23.1")
+  testImplementation("org.assertj:assertj-core")
 
   jmhAnnotationProcessor("org.openjdk.jmh:jmh-generator-annprocess:$jmhVersionCust")
 }
