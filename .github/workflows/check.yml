@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v3
-      - name: Set up JDK 17
+      - name: Set up JDK ${{ matrix.jvmVersion }} (${{ matrix.jvmDistribution }})
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.jvmVersion }}
