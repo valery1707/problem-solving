@@ -14,6 +14,8 @@ import kotlin.math.absoluteValue
  * ## Выходные данные
  *
  * Вывести сумму цифр числа `n`.
+ *
+ * @see <a href="https://www.eolymp.com/ru/problems/1603">Сумма цифр числа<a>
  */
 interface Problem1603K : ProblemConsole {
     @Suppress("EnumEntryName", "unused")

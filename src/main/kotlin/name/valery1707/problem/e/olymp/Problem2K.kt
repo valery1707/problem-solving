@@ -12,6 +12,8 @@ package name.valery1707.problem.e.olymp
  * ## Выходные данные
  *
  * Выведите количество цифр в числе `n`.
+ *
+ * @see <a href="https://www.eolymp.com/ru/problems/2">Цифры<a>
  */
 interface Problem2K : ProblemConsole {
     @Suppress("EnumEntryName", "unused")
