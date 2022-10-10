@@ -7,25 +7,23 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-internal class Problem8897KTest {
+internal class Problem8900KTest {
     @ParameterizedTest
     @ImplementationSource(
-        implementation = [Problem8897K.Implementation::class],
+        implementation = [Problem8900K.Implementation::class],
         csv = [CsvSource(
-            "0,10",
-            "3,10",
-            "7,10",
-            "17,20",
-            "10,20",
+            "0,7",
+            "3,7",
+            "7,14",
+            "17,21",
+            "10,14",
             "-3,0",
             "-5,0",
             "-7,0",
-            "-10,0",
-            "-15,-10",
-            "-2147483648,-2147483640",
+            "-15,-14",
         )]
     )
-    internal fun test1(variant: Implementation<Problem8897K>, input: String, expected: String) {
+    internal fun test1(variant: Implementation<Problem8900K>, input: String, expected: String) {
         assertThat(withinConsole("|", input, variant.get()::main)).isEqualTo(expected)
     }
 }

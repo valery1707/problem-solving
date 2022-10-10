@@ -27,7 +27,7 @@ interface Problem8897K : ProblemConsole {
             override fun main(args: Array<String>) {
                 val src = readln().toInt()
                 val inc = if (src >= 0) (10 - src % 10) else -(src % 10)
-                val next = src + inc
+                val next = src + if (inc > 0) inc else 10
                 println(next)
             }
         },
@@ -39,7 +39,7 @@ interface Problem8897K : ProblemConsole {
             override fun main(args: Array<String>) {
                 val src = readln().toBigInteger()
                 val inc = if (src >= BigInteger.ZERO) (BigInteger.TEN - src % BigInteger.TEN) else -(src % BigInteger.TEN)
-                val next = src + inc
+                val next = src + if (inc > BigInteger.ZERO) inc else BigInteger.TEN
                 println(next)
             }
         },
