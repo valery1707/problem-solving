@@ -33,8 +33,8 @@ interface Problem8682K : ProblemConsole {
         numberProcessing {
             override fun main(args: Array<String>) {
                 val n = readln().toLong()
-                var res = 0
-                var pow = 1
+                var res = 0L
+                var pow = 1L
                 var v = n.absoluteValue
                 while (v > 0) {
                     val i = (v % 10).toInt()

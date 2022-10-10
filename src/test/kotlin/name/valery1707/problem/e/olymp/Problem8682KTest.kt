@@ -22,7 +22,7 @@ internal class Problem8682KTest {
             "-1234,-13",
             "-13,-13",
             "-24,0",
-            //todo Падает тест #4 в варианте `numberProcessing`
+            "99999999999999999,99999999999999999",
         )]
     )
     internal fun test1(variant: Implementation<Problem8682K>, input: String, expected: String) {
