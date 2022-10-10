@@ -13,7 +13,7 @@ package name.valery1707.problem.e.olymp
  *
  * Выведите все степени двойки меньше `n` в порядке возрастания.
  *
- * @see <a href="https://www.eolymp.com/ru/problems/8917">Степени двойки<a>
+ * @see <a href="https://www.eolymp.com/ru/problems/8917">Степени двойки</a>
  */
 interface Problem8917K : ProblemConsole {
     @Suppress("EnumEntryName", "unused")

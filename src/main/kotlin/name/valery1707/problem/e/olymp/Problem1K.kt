@@ -13,7 +13,7 @@ package name.valery1707.problem.e.olymp
  *
  * Два одноцифровых числа, разделенных пробелом.
  *
- * @see <a href="https://www.eolymp.com/ru/problems/1">Простая задача<a>
+ * @see <a href="https://www.eolymp.com/ru/problems/1">Простая задача</a>
  */
 interface Problem1K : ProblemConsole {
     @Suppress("EnumEntryName", "unused")

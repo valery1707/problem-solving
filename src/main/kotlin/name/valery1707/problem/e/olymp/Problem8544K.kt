@@ -15,7 +15,7 @@ import kotlin.math.pow
  *
  * Выведите список квадратов всех натуральных чисел не больших `n` в возрастающем порядке.
  *
- * @see <a href="https://www.eolymp.com/ru/problems/8544">Квадраты чисел<a>
+ * @see <a href="https://www.eolymp.com/ru/problems/8544">Квадраты чисел</a>
  */
 interface Problem8544K : ProblemConsole {
     @Suppress("EnumEntryName", "unused")

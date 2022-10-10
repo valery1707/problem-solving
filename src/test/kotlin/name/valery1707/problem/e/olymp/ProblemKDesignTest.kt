@@ -24,7 +24,7 @@ internal class ProblemKDesignTest {
         assertThat(text).`as`(name).containsPattern(DOC_TITLE.toPattern())
         val title = DOC_TITLE.findAll(text).map { it.groupValues[1] }.toList()
         assertThat(title).`as`("Title count").hasSize(1)
-        val link = ">${title[0]}<a>".toRegex()
+        val link = ">${title[0]}</a>".toRegex()
         assertThat(text).`as`("Link present").containsPattern(link.toPattern())
         assertThat(link.findAll(text).asStream()).`as`("Link count").hasSize(1)
     }

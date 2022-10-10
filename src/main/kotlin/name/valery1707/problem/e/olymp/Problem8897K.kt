@@ -15,7 +15,7 @@ import java.math.BigInteger
  *
  * Вывести число, следующее за `n`, кратное `10`.
  *
- * @see <a href="https://www.eolymp.com/ru/problems/8897">Следующее число 2<a>
+ * @see <a href="https://www.eolymp.com/ru/problems/8897">Следующее число 2</a>
  */
 interface Problem8897K : ProblemConsole {
     @Suppress("EnumEntryName", "unused")

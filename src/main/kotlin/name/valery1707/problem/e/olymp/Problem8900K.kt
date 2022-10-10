@@ -13,7 +13,7 @@ package name.valery1707.problem.e.olymp
  *
  * Вывести наименьшее число, большее `n` и кратное `7`.
  *
- * @see <a href="https://www.eolymp.com/ru/problems/8900">Наименьшее из больших<a>
+ * @see <a href="https://www.eolymp.com/ru/problems/8900">Наименьшее из больших</a>
  */
 interface Problem8900K : ProblemConsole {
     @Suppress("EnumEntryName", "unused")

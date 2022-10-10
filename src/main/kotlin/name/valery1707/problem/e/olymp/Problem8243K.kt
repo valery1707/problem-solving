@@ -15,7 +15,7 @@ package name.valery1707.problem.e.olymp
  *
  * Выведите первую цифру заданного числа.
  *
- * @see <a href="https://www.eolymp.com/ru/problems/8243">Первая цифра числа<a>
+ * @see <a href="https://www.eolymp.com/ru/problems/8243">Первая цифра числа</a>
  */
 interface Problem8243K : ProblemConsole {
     @Suppress("EnumEntryName", "unused")

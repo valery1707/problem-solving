@@ -13,7 +13,7 @@ package name.valery1707.problem.e.olymp
  *
  * Выведите количество цифр в числе `n`.
  *
- * @see <a href="https://www.eolymp.com/ru/problems/2">Цифры<a>
+ * @see <a href="https://www.eolymp.com/ru/problems/2">Цифры</a>
  */
 interface Problem2K : ProblemConsole {
     @Suppress("EnumEntryName", "unused")
