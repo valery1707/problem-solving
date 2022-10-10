@@ -1,15 +1,15 @@
 # Run ./gradlew --write-locks to regenerate this file
 org.jetbrains:annotations:13.0 (1 constraints: df0e795c)
-org.jetbrains.kotlin:kotlin-stdlib:1.7.10 (3 constraints: 3d30aec2)
-org.jetbrains.kotlin:kotlin-stdlib-common:1.7.10 (1 constraints: 420fce7a)
-org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10 (1 constraints: e010f7d2)
-org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10 (1 constraints: 3b05413b)
+org.jetbrains.kotlin:kotlin-stdlib:1.7.20 (3 constraints: 403039c3)
+org.jetbrains.kotlin:kotlin-stdlib-common:1.7.20 (1 constraints: 430fd07a)
+org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.20 (1 constraints: e110f9d2)
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20 (1 constraints: 3c05433b)
 
 [Test dependencies]
 net.bytebuddy:byte-buddy:1.12.10 (1 constraints: 7b0bbcea)
 org.assertj:assertj-core:3.23.1 (1 constraints: 3b05433b)
-org.jetbrains.kotlin:kotlin-test:1.7.10 (2 constraints: 46168610)
-org.jetbrains.kotlin:kotlin-test-junit5:1.7.10 (1 constraints: 800eb558)
+org.jetbrains.kotlin:kotlin-test:1.7.20 (2 constraints: 4816bb10)
+org.jetbrains.kotlin:kotlin-test-junit5:1.7.20 (1 constraints: 810eb758)
 org.junit:junit-bom:5.9.1 (6 constraints: 57597fa8)
 org.junit.jupiter:junit-jupiter-api:5.9.1 (4 constraints: 5d3bb232)
 org.junit.jupiter:junit-jupiter-engine:5.9.1 (2 constraints: f319f931)
