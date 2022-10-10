@@ -1,5 +1,5 @@
 plugins {
-  kotlin("jvm") version "1.7.10"
+  kotlin("jvm") version "1.7.20"
   id("me.champeau.jmh") version "0.6.8"
   id("com.palantir.consistent-versions") version "2.11.0"
 }
