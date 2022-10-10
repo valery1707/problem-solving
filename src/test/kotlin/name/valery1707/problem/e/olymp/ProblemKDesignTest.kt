@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.nio.file.Path
 import java.nio.file.attribute.BasicFileAttributes
+import java.util.regex.Pattern
 import kotlin.io.path.Path
 import kotlin.io.path.nameWithoutExtension
 import kotlin.io.path.readText
@@ -24,7 +25,7 @@ internal class ProblemKDesignTest {
         assertThat(text).`as`(name).containsPattern(DOC_TITLE.toPattern())
         val title = DOC_TITLE.findAll(text).map { it.groupValues[1] }.toList()
         assertThat(title).`as`("Title count").hasSize(1)
-        val link = ">${title[0]}</a>".toRegex()
+        val link = ">${title[0].quoted()}</a>".toRegex()
         assertThat(text).`as`("Link present").containsPattern(link.toPattern())
         assertThat(link.findAll(text).asStream()).`as`("Link count").hasSize(1)
     }
@@ -78,6 +79,8 @@ internal class ProblemKDesignTest {
                     }
                     .toList()
             }
+
+        fun String.quoted() = Pattern.quote(this)
     }
 
 }
