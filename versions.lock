@@ -1,4 +1,8 @@
 # Run ./gradlew --write-locks to regenerate this file
+com.fasterxml.jackson:jackson-bom:2.13.4 (3 constraints: 8537f6d4)
+com.fasterxml.jackson.core:jackson-annotations:2.13.4 (2 constraints: 43215a94)
+com.fasterxml.jackson.core:jackson-core:2.13.4 (2 constraints: 43215a94)
+com.fasterxml.jackson.core:jackson-databind:2.13.4.2 (2 constraints: 5514019e)
 org.jetbrains:annotations:13.0 (1 constraints: df0e795c)
 org.jetbrains.kotlin:kotlin-stdlib:1.7.20 (3 constraints: 403039c3)
 org.jetbrains.kotlin:kotlin-stdlib-common:1.7.20 (1 constraints: 430fd07a)

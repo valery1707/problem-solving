@@ -22,6 +22,8 @@ repositories {
 }
 
 dependencies {
+  implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.2")
+
   testImplementation(kotlin("test"))
   testImplementation(platform("org.junit:junit-bom"))
   testImplementation("org.junit.jupiter:junit-jupiter-params")
