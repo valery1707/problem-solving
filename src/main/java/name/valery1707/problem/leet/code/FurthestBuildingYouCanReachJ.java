@@ -18,9 +18,9 @@ import java.util.PriorityQueue;
  * <p>
  * Constraints:
  * <ul>
- * <li>{@code 1 <= heights.length <= 105}</li>
- * <li>{@code 1 <= heights[i] <= 106}</li>
- * <li>{@code 0 <= bricks <= 109}</li>
+ * <li>{@code 1 <= heights.length <= 10^5}</li>
+ * <li>{@code 1 <= heights[i] <= 10^6}</li>
+ * <li>{@code 0 <= bricks <= 10^9}</li>
  * <li>{@code 0 <= ladders <= heights.length}</li>
  * </ul>
  *
