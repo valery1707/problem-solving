@@ -3,6 +3,7 @@ plugins {
   id("me.champeau.jmh") version "0.6.8"
   id("com.palantir.consistent-versions") version "2.11.0"
   id("org.jetbrains.kotlinx.kover") version "0.6.1"
+  id("org.sonarqube") version "3.4.0.2513"
 }
 
 group = "name.valery1707"
@@ -54,4 +55,14 @@ tasks.test {
 jmh {
   //https://github.com/melix/jmh-gradle-plugin#configuration-options
   jmhVersion.set(jmhVersionCust)
+}
+
+sonarqube {
+  properties {
+    properties["sonar.projectKey"] = "valery1707_problem-solving"
+    properties["sonar.organization"] = "valery1707"
+    properties["sonar.host.url"] = "https://sonarcloud.io"
+    properties["sonar.junit.reportPaths"] = "${project.buildDir}/test-results/test/"
+    properties["sonar.coverage.jacoco.xmlReportPaths"] = "${project.buildDir}/reports/kover/xml/report.xml"
+  }
 }
