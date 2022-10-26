@@ -6,6 +6,7 @@
 
 [![CodeFactor Status](https://www.codefactor.io/repository/github/valery1707/problem-solving/badge)](https://www.codefactor.io/repository/github/valery1707/problem-solving)
 [![Sonar Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=valery1707_problem-solving&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=valery1707_problem-solving)
+[![Codecov Status](https://codecov.io/gh/valery1707/problem-solving/branch/main/graph/badge.svg?token=03Zn8e66ag)](https://codecov.io/gh/valery1707/problem-solving)
 
 [![Mergify Status](https://img.shields.io/endpoint.svg?url=https://api.mergify.com/v1/badges/valery1707/problem-solving&style=flat)](https://dashboard.mergify.com/github/valery1707/repo/problem-solving)
 
