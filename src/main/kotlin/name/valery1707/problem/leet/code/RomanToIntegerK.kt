@@ -52,8 +52,8 @@ interface RomanToIntegerK {
             private val prefix = mapOf('I' to setOf('V', 'X'), 'X' to setOf('L', 'C'), 'C' to setOf('D', 'M'))
             override fun romanToInt(s: String): Int {
                 val max = s.length - 1
-                var sum = 0;
-                var i = 0;
+                var sum = 0
+                var i = 0
                 while (i <= max) {
                     val c = s[i]
                     sum += if (c in prefix && i < max && s[i + 1] in prefix[c]!!) {

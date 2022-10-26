@@ -69,8 +69,8 @@ interface CanPlaceFlowersK {
                     //1->0, 2->0, 3->1, 4->1, 5->2, 6->2
                     max(0, (count + 1) / 2 - 1)
                 }
-                var possible = 0;
-                var prevUsed = -2;
+                var possible = 0
+                var prevUsed = -2
                 for (i in flowerbed.indices) {
                     if (flowerbed[i] == 1) {
                         possible += count(i, prevUsed)
