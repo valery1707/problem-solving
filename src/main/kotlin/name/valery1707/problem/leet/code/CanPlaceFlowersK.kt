@@ -48,7 +48,7 @@ interface CanPlaceFlowersK {
                     //"00000"->[5]->2
                     //"000000"->[6]->2
                     //"0000000"->[7]->3
-                    .map { ((it + 1) / 2) - 1 }
+                    .map { (it + 1) / 2 - 1 }
                     .filter { it > 0 }.sum()
                 return n <= count
             }
@@ -65,7 +65,7 @@ interface CanPlaceFlowersK {
                 }
 
                 val count: (curr: Int, prev: Int) -> Int = { curr, prev ->
-                    val count = (curr - prev - 1)
+                    val count = curr - prev - 1
                     //1->0, 2->0, 3->1, 4->1, 5->2, 6->2
                     max(0, (count + 1) / 2 - 1)
                 }
