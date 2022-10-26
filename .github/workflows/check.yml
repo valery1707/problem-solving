@@ -26,4 +26,8 @@ jobs:
         with:
           timeout_minutes: 10
           max_attempts: 3
-          command: ./gradlew check
+          command: ./gradlew check koverXmlReport
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./build/reports/kover/xml
