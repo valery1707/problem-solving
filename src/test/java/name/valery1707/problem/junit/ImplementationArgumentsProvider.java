@@ -53,7 +53,7 @@ public class ImplementationArgumentsProvider implements ArgumentsProvider, Annot
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return variants.entrySet().stream()
             .flatMap(variant -> args.stream()
-                .flatMap(arg -> provideArguments(arg, context))
+                .flatMap(arg -> provideArgumentsImpl(arg, context))
                 .map(arg -> prepend(variant, arg))
             );
     }
@@ -81,7 +81,7 @@ public class ImplementationArgumentsProvider implements ArgumentsProvider, Annot
     }
 
     @NotNull
-    private static Stream<? extends Arguments> provideArguments(ArgumentsProvider provider, ExtensionContext context) {
+    private static Stream<? extends Arguments> provideArgumentsImpl(ArgumentsProvider provider, ExtensionContext context) {
         try {
             return provider.provideArguments(context);
         } catch (Exception e) {

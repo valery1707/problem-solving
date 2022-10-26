@@ -30,7 +30,7 @@ interface Problem8544K : ProblemConsole {
                 var i = 1
                 do {
                     val needSpace = i > 1
-                    val pow = (i++).toDouble().pow(2).toInt()
+                    val pow = i++.toDouble().pow(2).toInt()
                     if (pow <= src) {
                         if (needSpace) {
                             print(' ')
