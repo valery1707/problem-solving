@@ -6,8 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StringConcatenationJTest {
@@ -31,7 +29,7 @@ class StringConcatenationJTest {
         50,
     })
     void testGenerator(int len) {
-        assertThat(StringConcatenationJ.generate(ThreadLocalRandom.current(), len)).hasSize(len);
+        assertThat(StringConcatenationJ.generate(len)).hasSize(len);
     }
 
 }

@@ -1,8 +1,6 @@
 package name.valery1707.problem;
 
-import java.util.Random;
-
-import static java.util.stream.Collectors.joining;
+import static net.andreinc.mockneat.unit.text.Strings.strings;
 
 /**
  * Рассматривается сравнение вариантов конкатенации строк в коде с учётом производительности и читаемости.
@@ -35,11 +33,8 @@ public interface StringConcatenationJ {
         },
     }
 
-    static String generate(Random random, int len) {
-        return random
-            .ints(1, 10)
-            .limit(len).mapToObj(String::valueOf)
-            .collect(joining());
+    static String generate(int len) {
+        return strings().size(() -> () -> len).get();
     }
 
 }

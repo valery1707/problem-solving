@@ -3,9 +3,6 @@ package name.valery1707.problem;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
 @State(Scope.Benchmark)
 @Warmup(iterations = 2, time = 2)
 @Measurement(iterations = 5, time = 5)
@@ -28,9 +25,8 @@ public class StringConcatenationKBenchmark {
 
     @Setup
     public void setup() {
-        Random random = ThreadLocalRandom.current();
-        lhs = StringConcatenationJ.generate(random, lhsLen);
-        rhs = StringConcatenationJ.generate(random, rhsLen);
+        lhs = StringConcatenationJ.generate(lhsLen);
+        rhs = StringConcatenationJ.generate(rhsLen);
     }
 
     @Benchmark

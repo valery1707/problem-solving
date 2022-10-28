@@ -16,19 +16,18 @@ import org.openjdk.jmh.infra.Blackhole;
 @Measurement(iterations = 5, time = 5)
 @Fork(2)
 @BenchmarkMode({Mode.Throughput, Mode.AverageTime})
+@SuppressWarnings("unused")
 public class FibBenchmark {
 
     @Param({"10", "30"})
     private int n;
 
-    @Benchmark
-    public void fibClassic(Blackhole bh) {
-        bh.consume(Fib.fibClassic(n));
-    }
+    @Param
+    private Fib.Implementation variant;
 
     @Benchmark
-    public void fibTailRec(Blackhole bh) {
-        bh.consume(Fib.tailRecFib(n));
+    public void fib(Blackhole bh) {
+        bh.consume(variant.fib(n));
     }
 
 }
