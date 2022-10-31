@@ -3,7 +3,7 @@ plugins {
   id("me.champeau.jmh") version "0.6.8"
   id("com.palantir.consistent-versions") version "2.11.0"
   id("org.jetbrains.kotlinx.kover") version "0.6.1"
-  id("org.sonarqube") version "3.4.0.2513"
+  id("org.sonarqube") version "3.5.0.2730"
 }
 
 group = "name.valery1707"
