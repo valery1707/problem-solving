@@ -56,85 +56,50 @@ public interface JavaStackJ extends ProblemConsole {
     boolean isBalanced(String input);
 
     enum Implementation implements JavaStackJ {
-        @SuppressWarnings("EnhancedSwitchMigration")
-        deque_java8 {
+        deque {
             @Override
             public boolean isBalanced(String input) {
                 Deque<Character> stack = new ArrayDeque<>();
                 for (int i = 0; i < input.length(); i++) {
                     char curr = input.charAt(i);
-                    switch (curr) {
-                        case '{':
-                        case '[':
-                        case '(':
-                            stack.push(curr);
-                            break;
-                        case '}':
-                        case ']':
-                        case ')':
-                            if (stack.isEmpty()) {
-                                return false;
-                            }
-                            char prev = stack.pop();
-                            if (
-                                (curr == '}' && prev != '{') ||
-                                    (curr == ']' && prev != '[') ||
-                                    (curr == ')' && prev != '(')
-                            ) {
-                                return false;
-                            }
-                            break;
-                    }
-                }
-                return stack.isEmpty();
-            }
-        },
-        deque_java17 {
-            @Override
-            public boolean isBalanced(String input) {
-                Deque<Character> stack = new ArrayDeque<>();
-                for (int i = 0; i < input.length(); i++) {
-                    char curr = input.charAt(i);
-                    switch (curr) {
-                        case '{', '[', '(' -> stack.push(curr);
-                        case '}', ']', ')' -> {
-                            if (stack.isEmpty()) {
-                                return false;
-                            }
-                            char prev = stack.pop();
-                            if (
-                                (curr == '}' && prev != '{') ||
-                                    (curr == ']' && prev != '[') ||
-                                    (curr == ')' && prev != '(')
-                            ) {
-                                return false;
-                            }
+                    if (curr == '{' || curr == '[' || curr == '(') {
+                        stack.push(curr);
+                    } else if (curr == '}' || curr == ']' || curr == ')') {
+                        if (stack.isEmpty()) {
+                            return false;
+                        }
+                        char prev = stack.pop();
+                        if (
+                            (curr == '}' && prev != '{') ||
+                                (curr == ']' && prev != '[') ||
+                                (curr == ')' && prev != '(')
+                        ) {
+                            return false;
                         }
                     }
                 }
                 return stack.isEmpty();
             }
         },
-        list_java17 {
+        list {
             @Override
             public boolean isBalanced(String input) {
                 List<Character> stack = new ArrayList<>();
                 for (int i = 0; i < input.length(); i++) {
                     char curr = input.charAt(i);
-                    switch (curr) {
-                        case '{', '[', '(' -> stack.add(curr);
-                        case '}', ']', ')' -> {
-                            if (stack.isEmpty()) {
-                                return false;
-                            }
-                            char prev = stack.remove(stack.size() - 1);
-                            if (
-                                (curr == '}' && prev != '{') ||
-                                    (curr == ']' && prev != '[') ||
-                                    (curr == ')' && prev != '(')
-                            ) {
-                                return false;
-                            }
+                    if (curr == '{' || curr == '[' || curr == '(') {
+                        stack.add(curr);
+                    } else if (curr == '}' || curr == ']' || curr == ')') {
+                        if (stack.isEmpty()) {
+                            return false;
+                        }
+                        char prev = stack.remove(stack.size() - 1);
+                        if (
+                            (curr == '}' && prev != '{') ||
+                                (curr == ']' && prev != '[') ||
+                                (curr == ')' && prev != '(')
+                        ) {
+                            return false;
                         }
                     }
                 }
