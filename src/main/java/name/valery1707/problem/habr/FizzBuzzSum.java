@@ -163,6 +163,25 @@ public interface FizzBuzzSum {
                     .forEach(out::println);
             }
         },
+
+        /**
+         * <a href="https://habr.com/ru/post/697234/">Вариант пользователя Samhuawei</a>
+         */
+        Samhuawei {
+            @Override
+            public void calculate(PrintStream out, int min, int max, int lim) {
+                for (int i = 0; i < 10; ++i)
+                    for (int j = 0; j + i < 10; ++j)
+                        for (int k = 0; i + j + k < 9; ++k) {
+                            if (k == 5 || k == 0)
+                                continue;
+                            if (i + j + k != 3 && i + j + k != 6)
+                                continue;
+
+                            out.print(i * 100 + j * 10 + k);
+                        }
+            }
+        },
     }
 
 }

@@ -21,6 +21,9 @@ class FizzBuzzSumTest {
         "pin2t(0, 100000, 20)",
         "rombell(0, 1000, 20)",
         "rombell(0, 100000, 20)",
+        "Samhuawei(0, 1000, 10)",
+        "Samhuawei(0, 1000, 20)",
+        "Samhuawei(0, 100000, 20)",
     });
 
     @ParameterizedTest(name = "[{index}] Run {0} variant with range [{1} .. {2}] and limit {3}")
