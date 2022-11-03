@@ -20,7 +20,7 @@ internal class SubarraySumEqualsKTest {
             "'[1,2,3,-3]', 3, 3",//`[1,2`, `[1,2,3,-3]`, `3`
         )]
     )
-    fun test1(variant: Implementation<SubarraySumEqualsKJ>, numsRaw: String, k: Int, expected: Int) {
+    internal fun test1(variant: Implementation<SubarraySumEqualsKJ>, numsRaw: String, k: Int, expected: Int) {
         val nums = numsRaw.trim('[', ']').split(',').map(String::toInt).toIntArray()
         assertThat(variant.get().subarraySum(nums, k)).isEqualTo(expected)
     }
