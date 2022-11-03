@@ -43,6 +43,8 @@ class JavaStackJTest {
             "false,[)",
             "false,[}",
             "true,[]",
+            "true|true|true,(A)|[A]|{A}",
+            "true,(A)[B]{C}",
         })
     )
     void test1(Implementation<JavaStackJ> variant, String expected, String input) {
