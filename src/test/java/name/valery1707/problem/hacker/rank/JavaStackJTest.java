@@ -33,6 +33,16 @@ class JavaStackJTest {
             "true,[]{}(){()}((())){{{}}}{()()}{{}{}}",
             "true,[[]][][]",
             "false,}{",
+            //Self-invented
+            "true,()",
+            "false,(}",
+            "false,(]",
+            "false,{)",
+            "true,{}",
+            "false,{]",
+            "false,[)",
+            "false,[}",
+            "true,[]",
         })
     )
     void test1(Implementation<JavaStackJ> variant, String expected, String input) {
