@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-  implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.2")
+  implementation("com.fasterxml.jackson.core:jackson-databind:2.14.0")
   implementation("net.andreinc:mockneat:0.4.8")
 
   testImplementation(kotlin("test"))
