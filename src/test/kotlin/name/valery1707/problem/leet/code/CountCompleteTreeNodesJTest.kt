@@ -5,11 +5,19 @@ import name.valery1707.problem.junit.ImplementationSource
 import name.valery1707.problem.leet.code.CountCompleteTreeNodesJ.TreeNode
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.within
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import kotlin.math.pow
 
 internal class CountCompleteTreeNodesJTest {
+
+    @Test
+    internal fun testProvidedClass() {
+        assertThat(TreeNode()).isNotNull
+        assertThat(TreeNode(1, null, null)).isNotNull
+    }
+
     @ParameterizedTest(name = "[{index}] {0}([...]) == {2}")
     @ImplementationSource(
         implementation = [CountCompleteTreeNodesJ.Implementation::class],
