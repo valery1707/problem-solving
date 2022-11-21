@@ -9,7 +9,7 @@ plugins {
 group = "name.valery1707"
 version = "0.1.0-SNAPSHOT"
 
-val jmhVersionCust = "1.35"
+val jmhVersionCust = "1.36"
 
 java {
   sourceCompatibility = JavaVersion.VERSION_17
