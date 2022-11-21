@@ -10,5 +10,13 @@ jobs:
         uses: peter-evans/slash-command-dispatch@v3
         with:
           token: ${{ secrets.PAT }}
-          commands: |
-            help
+          config: >
+            [
+              {
+                "command": "help"
+              },
+              {
+                "command": "update-versions-lock",
+                "issue_type": "pull-request"
+              }
+            ]
