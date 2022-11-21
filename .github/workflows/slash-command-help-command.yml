@@ -16,4 +16,5 @@ jobs:
             > Command | Description
             > --- | ---
             > /help | Show this information
+            > /update-versions-lock | Update the [versions.lock](../blob/main/versions.lock) file within the last commit in the branch
           reaction-type: hooray
