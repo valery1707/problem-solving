@@ -1,0 +1,47 @@
+name: Build Gradle project
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-gradle-project:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        jvmVersion: [ '17' ]
+        jvmDistribution: [ 'adopt', 'zulu', 'liberica' ]
+    name: Build with ${{ matrix.jvmVersion }} (${{ matrix.jvmDistribution }}) on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v3
+      - name: Set up JDK ${{ matrix.jvmVersion }} (${{ matrix.jvmDistribution }})
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.jvmVersion }}
+          distribution: ${{ matrix.jvmDistribution }}
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Build with Gradle
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: ./gradlew check koverXmlReport sonarqube --info
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./build/reports/kover/xml

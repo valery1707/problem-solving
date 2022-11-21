@@ -1,0 +1,33 @@
+# Run complete. Total time: 00:18:52
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+NOTE: Current JVM experimentally supports Compiler Blackholes, and they are in use. Please exercise
+extra caution when trusting the results, look into the generated code to check the benchmark still
+works, and factor in a small probability of new VM bugs. Additionally, while comparisons between
+different JVMs are already problematic, the performance difference caused by different Blackhole
+modes can be very significant. Please make sure you use the consistent Blackhole mode for comparisons.
+
+(height)  (lastLineMod)                (variant)   Mode  Cnt         Score         Error  Units
+       5             -3             naiveRecurse  thrpt   10  11863406,805 ±  433634,847  ops/s
+       5             -3        heightCalculation  thrpt   10   8367508,339 ± 1084614,504  ops/s
+       5             -3  heightCalculationLambda  thrpt   10   8675740,164 ±  735848,872  ops/s
+       5              0             naiveRecurse  thrpt   10  10888784,950 ± 2654047,814  ops/s
+       5              0        heightCalculation  thrpt   10   5986102,128 ±  878621,277  ops/s
+       5              0  heightCalculationLambda  thrpt   10   6388346,224 ±  688671,256  ops/s
+       5             +3             naiveRecurse  thrpt   10   9638806,793 ±  635694,756  ops/s
+       5             +3        heightCalculation  thrpt   10   7616479,424 ± 1216990,439  ops/s
+       5             +3  heightCalculationLambda  thrpt   10   7678590,504 ± 1307645,575  ops/s
+      25             -3             naiveRecurse  thrpt   10         6,008 ±       0,689  ops/s
+      25             -3        heightCalculation  thrpt   10    340341,729 ±   75292,841  ops/s
+      25             -3  heightCalculationLambda  thrpt   10    395872,613 ±   25764,894  ops/s
+      25              0             naiveRecurse  thrpt   10         7,120 ±       0,636  ops/s
+      25              0        heightCalculation  thrpt   10    337271,181 ±   76184,193  ops/s
+      25              0  heightCalculationLambda  thrpt   10    386692,911 ±   34283,433  ops/s
+      25             +3             naiveRecurse  thrpt   10         7,285 ±       0,458  ops/s
+      25             +3        heightCalculation  thrpt   10    391387,714 ±   37111,526  ops/s
+      25             +3  heightCalculationLambda  thrpt   10    400202,704 ±   17579,789  ops/s
