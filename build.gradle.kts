@@ -12,8 +12,9 @@ version = "0.1.0-SNAPSHOT"
 val jmhVersionCust = "1.36"
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_17
-  targetCompatibility = JavaVersion.VERSION_17
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_17.majorVersion))
+  }
 }
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
   kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
