@@ -12,6 +12,9 @@ jobs:
           token: ${{ secrets.PAT }}
           repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
           ref: ${{ github.event.client_payload.pull_request.head.ref }}
+          fetch-depth: '0'
+          lfs: 'true'
+          submodules: 'true'
 
       - name: Make changes to commit
         run: |
