@@ -47,7 +47,7 @@ tasks.withType<Javadoc> {
   options.encoding = "UTF-8"
 }
 
-tasks.test {
+tasks.withType<Test> {
   useJUnitPlatform()
   testLogging {
     events("passed", "skipped", "failed")
