@@ -1,7 +1,7 @@
 plugins {
   kotlin("jvm") version "1.7.22"
   id("me.champeau.jmh") version "0.6.8"
-  id("com.palantir.consistent-versions") version "2.11.0"
+  id("com.palantir.consistent-versions") version "2.12.0"
   id("org.jetbrains.kotlinx.kover") version "0.6.1"
   id("org.sonarqube") version "3.4.0.2513"
 }
