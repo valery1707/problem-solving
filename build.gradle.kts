@@ -1,15 +1,15 @@
+// Remove when https://youtrack.jetbrains.com/issue/KTIJ-19369 and https://github.com/gradle/gradle/issues/22797 are fixed
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-  kotlin("jvm") version "1.7.22"
-  id("me.champeau.jmh") version "0.6.8"
-  id("com.palantir.consistent-versions") version "2.11.0"
-  id("org.jetbrains.kotlinx.kover") version "0.6.1"
-  id("org.sonarqube") version "3.4.0.2513"
+  kotlin("jvm") version libs.versions.kotlin
+  alias(libs.plugins.jmh)
+  alias(libs.plugins.consistent.versions)
+  alias(libs.plugins.kover)
+  alias(libs.plugins.sonarqube)
 }
 
 group = "name.valery1707"
 version = "0.1.0-SNAPSHOT"
-
-val jmhVersionCust = "1.36"
 
 java {
   toolchain {
@@ -25,15 +25,15 @@ repositories {
 }
 
 dependencies {
-  implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
-  implementation("net.andreinc:mockneat:0.4.8")
+  implementation(libs.jackson.databind)
+  implementation(libs.mockneat)
 
   testImplementation(kotlin("test"))
-  testImplementation(platform("org.junit:junit-bom"))
+  testImplementation(platform(libs.junit))
   testImplementation("org.junit.jupiter:junit-jupiter-params")
-  testImplementation("org.assertj:assertj-core")
+  testImplementation(libs.assertj)
 
-  jmhAnnotationProcessor("org.openjdk.jmh:jmh-generator-annprocess:$jmhVersionCust")
+  jmhAnnotationProcessor(libs.jmh.ann)
 }
 
 //Encoding
@@ -56,7 +56,7 @@ tasks.withType<Test> {
 
 jmh {
   //https://github.com/melix/jmh-gradle-plugin#configuration-options
-  jmhVersion.set(jmhVersionCust)
+  jmhVersion.set(libs.versions.jmh.tools)
 }
 
 sonarqube {
