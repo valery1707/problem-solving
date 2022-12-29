@@ -7,13 +7,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toUnmodifiableMap;
+import static net.andreinc.mockneat.unit.objects.Filler.filler;
+import static net.andreinc.mockneat.unit.types.Ints.ints;
 
 public interface ParseJsonList {
 
@@ -63,14 +62,6 @@ public interface ParseJsonList {
 
         private String code;
 
-        public DemoDto() {
-        }
-
-        public DemoDto(String code) {
-            this();
-            this.code = code;
-        }
-
         public String getCode() {
             return code;
         }
@@ -82,13 +73,10 @@ public interface ParseJsonList {
     }
 
     static String generate(ObjectMapper mapper, int count) throws JsonProcessingException {
-        List<DemoDto> list = IntStream
-            .generate(() -> ThreadLocalRandom.current().nextInt(count * 1000))
-            .distinct()
-            .limit(count)
-            .mapToObj(String::valueOf)
-            .map(DemoDto::new)
-            .collect(toList());
+        List<DemoDto> list = filler(DemoDto::new)
+            .setter(DemoDto::setCode, ints().bound(count * 1000).map(String::valueOf))
+            .list(count)
+            .get();
         return mapper.writeValueAsString(list);
     }
 
