@@ -11,8 +11,12 @@ junit = { module = "org.junit:junit-bom", version.ref = "junit" }
 assertj = { module = "org.assertj:assertj-core", version = "3.23.1" }
 mockneat = { module = "net.andreinc:mockneat", version = "0.4.8" }
 jmh-ann = { module = "org.openjdk.jmh:jmh-generator-annprocess", version.ref = "jmh.tools" }
+logger-api4j = { module = "org.slf4j:slf4j-api", version = "2.0.6" }
+logger-api4k = { module = "io.github.microutils:kotlin-logging-jvm", version = "3.0.4" }
+logger-impl = { module = "ch.qos.logback:logback-classic", version = "1.4.5" }
 
 [bundles]
+logger-api = ["logger.api4j", "logger.api4k"]
 
 [plugins]
 jmh = { id = "me.champeau.jmh", version = "0.6.8" }

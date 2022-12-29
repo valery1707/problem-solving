@@ -27,6 +27,9 @@ repositories {
 dependencies {
   implementation(libs.jackson.databind)
   implementation(libs.mockneat)
+  implementation(libs.bundles.logger.api)
+
+  runtimeOnly(libs.logger.impl)
 
   testImplementation(kotlin("test"))
   testImplementation(platform(libs.junit))

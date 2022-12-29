@@ -40,7 +40,7 @@ class LinkChecker(private val root: Path) {
             .filter { it.second.second.first != 200 }
             .toList()
         // todo remove
-        println("filePos2uriCheck = $filePos2uriCheck")
+        logger.debug { "filePos2uriCheck = $filePos2uriCheck" }
         return filePos2uriCheck
             .associateBy(
                 { "${it.first.first}:${it.first.second}" },
@@ -59,6 +59,8 @@ class LinkChecker(private val root: Path) {
     }
 
     companion object {
+        private val logger = mu.KotlinLogging.logger {}
+
         /**
          * https://stackoverflow.com/a/45690571
          */
@@ -104,8 +106,7 @@ class LinkChecker(private val root: Path) {
             val request = HttpRequest.newBuilder(this).GET().build()
             // todo Cache
             return try {
-                // todo Logging
-                println("Check: $this")
+                logger.info("Check: $this")
                 val response = client.send(request, HttpResponse.BodyHandlers.discarding())
                 when (response.statusCode()) {
                     //Redirects: extract new location
@@ -128,8 +129,7 @@ class LinkChecker(private val root: Path) {
 
                             ?: 500
 
-                        // todo Logging
-                        println("Await: $await ms")
+                        logger.debug("Await: $await ms")
                         Thread.sleep(await)
                         check(client)
                     }
@@ -137,7 +137,7 @@ class LinkChecker(private val root: Path) {
                     else -> response.statusCode() to response.uri()
                 }
             } catch (e: Exception) {
-                // todo Logging
+                logger.error(e) { "Handle error on checking $this" }
                 -1 to URI.create("http://host?message=${e.message?.replace(" ", "%20")}")
             }
         }
