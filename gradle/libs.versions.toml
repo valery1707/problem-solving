@@ -1,0 +1,21 @@
+[versions]
+kotlin = "1.7.22"
+jackson = "2.14.1"
+junit = "5.9.1"
+jmh-plugin = "0.6.8"
+jmh-tools = "1.36"
+
+[libraries]
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+junit = { module = "org.junit:junit-bom", version.ref = "junit" }
+assertj = { module = "org.assertj:assertj-core", version = "3.23.1" }
+mockneat = { module = "net.andreinc:mockneat", version = "0.4.8" }
+jmh-ann = { module = "org.openjdk.jmh:jmh-generator-annprocess", version.ref = "jmh.tools" }
+
+[bundles]
+
+[plugins]
+jmh = { id = "me.champeau.jmh", version = "0.6.8" }
+kover = { id = "org.jetbrains.kotlinx.kover", version = "0.6.1" }
+sonarqube = { id = "org.sonarqube", version = "3.4.0.2513" }
+consistent-versions = { id = "com.palantir.consistent-versions", version = "2.11.0" }

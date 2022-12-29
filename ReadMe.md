@@ -13,6 +13,6 @@
 
 [![Mergify Status](https://img.shields.io/endpoint.svg?url=https://api.mergify.com/v1/badges/valery1707/problem-solving&style=flat)](https://dashboard.mergify.com/github/valery1707/repo/problem-solving)
 
-Версии зависимостей контролируются плагином [com.palantir.consistent-versions](https://github.com/palantir/gradle-consistent-versions).
+Версии зависимостей управляются через функционал [version catalog](https://docs.gradle.org/current/userguide/platforms.html) (см. файл [libs.versions.toml](gradle/libs.versions.toml)) и валидируются плагином [com.palantir.consistent-versions](https://github.com/palantir/gradle-consistent-versions) (см. файл [versions.lock](versions.lock)).
 
-Сами версии записаны в файле [versions.props](versions.props), обновления файла [versions.lock](versions.lock) выполняется командой `./gradlew --write-locks`.
+Обновление файла зависимостей выполняется командой `./gradlew --write-locks`.
