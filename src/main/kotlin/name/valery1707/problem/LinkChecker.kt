@@ -31,7 +31,7 @@ class LinkChecker(private val root: Path) {
             }
             .flatMap { pathWithText ->
                 pathWithText.second.findUri()
-                    .map { (pathWithText.first to it.first) to it.second }
+                    .map { pathWithText.first to it.first to it.second }
             }
             .take(20)// todo Remove limit
             .map {
@@ -88,7 +88,7 @@ class LinkChecker(private val root: Path) {
             .findAll(this)
             .filter { it.value.startsWith("http") }
             .map { uri ->
-                (uri.position(this)) to (uri.value.trimEnd('.').toURI())
+                uri.position(this) to uri.value.trimEnd('.').toURI()
             }
             .filter { it.second != null }
             .map { it.first to it.second!! }
