@@ -28,7 +28,7 @@ import javax.net.ssl.SSLSession
 import kotlin.io.path.toPath
 
 typealias ResponseBuilder<T> = (HttpRequest) -> HttpResponse<T>
-typealias ResponseMeta = Pair<Int, Map<String, String>>
+typealias ResponseMeta = () -> Pair<Int, Map<String, String>>
 
 internal class LinkCheckerTest {
 
@@ -55,10 +55,10 @@ internal class LinkCheckerTest {
         val path = javaClass.getResource("/linkChecker/Demo.md")?.toURI()?.toPath()?.parent
         assertThat(path).isNotNull.isDirectory.isReadable
 
-        fun ok(): ResponseMeta = 200 to mapOf()
-        fun notFound(): ResponseMeta = 404 to mapOf()
-        fun redirect(code: Int, target: String): ResponseMeta = code to mapOf("Location" to target)
-        fun rateLimitGH(awaitMillis: Long): ResponseMeta = 403 to mapOf("x-ratelimit-reset" to Instant.now().plusMillis(awaitMillis).epochSecond.toString())
+        fun ok(): ResponseMeta = { 200 to mapOf() }
+        fun notFound(): ResponseMeta = { 404 to mapOf() }
+        fun redirect(code: Int, target: String): ResponseMeta = { code to mapOf("Location" to target) }
+        fun rateLimitGH(awaitMillis: Long): ResponseMeta = { 403 to mapOf("x-ratelimit-reset" to Instant.now().plusMillis(awaitMillis).epochSecond.toString()) }
 
         //Check links via: curl --silent -X GET --head 'URL'
         val client = MockedHttpClient.fromMeta(
@@ -73,7 +73,6 @@ internal class LinkCheckerTest {
                     redirect(301, "https://schema.org/"),
                 ),
                 "https://github.com/androidx/androidx/blob/androidx-main/build.gradle" to listOf(
-                    //todo Calculate header value on building response
                     //Will wait some time
                     rateLimitGH(2111),
                     //Will wait zero time
@@ -152,8 +151,9 @@ internal class LinkCheckerTest {
             fun fromMeta(responses: Map<String, List<ResponseMeta>>): HttpClient = fromBuilders(
                 responses.mapValues {
                     it.value
-                        .map<ResponseMeta, ResponseBuilder<Any?>> { meta ->
+                        .map<ResponseMeta, ResponseBuilder<Any?>> { metaBuilder ->
                             { req ->
+                                val meta = metaBuilder()
                                 MockedHttpResponse.fromRequest(req, meta.first, meta.second.mapValues { h -> listOf(h.value) })
                             }
                         }
