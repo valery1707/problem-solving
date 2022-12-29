@@ -1,5 +1,6 @@
 package name.valery1707.problem
 
+import name.valery1707.problem.LinkChecker.Companion.HTTP_DATE_FORMAT
 import name.valery1707.problem.LinkChecker.Companion.toURI
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
@@ -19,6 +20,7 @@ import java.net.http.HttpResponse
 import java.nio.file.Path
 import java.time.Duration
 import java.time.Instant
+import java.time.ZoneId
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
@@ -59,6 +61,10 @@ internal class LinkCheckerTest {
         fun notFound(): ResponseMeta = { 404 to mapOf() }
         fun redirect(code: Int, target: String): ResponseMeta = { code to mapOf("Location" to target) }
         fun rateLimitGH(awaitMillis: Long): ResponseMeta = { 403 to mapOf("x-ratelimit-reset" to Instant.now().plusMillis(awaitMillis).epochSecond.toString()) }
+        fun rateLimitSpecSec(awaitSec: Int): ResponseMeta = { 429 to mapOf("Retry-After" to awaitSec.toString()) }
+        fun rateLimitSpecDate(awaitMillis: Long): ResponseMeta = {
+            429 to mapOf("Retry-After" to HTTP_DATE_FORMAT.format(Instant.now().plusMillis(awaitMillis).atZone(ZoneId.systemDefault())))
+        }
 
         //Check links via: curl --silent -X GET --head 'URL'
         val client = MockedHttpClient.fromMeta(
@@ -81,6 +87,13 @@ internal class LinkCheckerTest {
                     rateLimitGH(-1500),
                     ok(),
                 ),
+                "https://www.bearer.com/" to listOf(
+                    // Use variant with "delay-seconds"
+                    rateLimitSpecSec(1),
+                    // Use variant with "http-date"
+                    rateLimitSpecDate(100),
+                    ok(),
+                ),
                 "https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryGroups.kt" to listOf(
                     notFound(),
                 ),
@@ -93,7 +106,7 @@ internal class LinkCheckerTest {
             mapOf(
                 "Demo.md:1:25" to "https://ya.ru -> 302 -> https://ya.ru/",
                 "Demo.md:3:14" to "http://schema.org -> 301 -> https://schema.org/",
-                "Demo.md:5:14" to "https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryGroups.kt -> 404",
+                "Demo.md:7:14" to "https://github.com/androidx/androidx/blob/androidx-main/buildSrc/public/src/main/kotlin/androidx/build/LibraryGroups.kt -> 404",
             ),
         )
     }

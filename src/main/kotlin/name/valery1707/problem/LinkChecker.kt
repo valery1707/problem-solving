@@ -2,11 +2,13 @@ package name.valery1707.problem
 
 import java.net.URI
 import java.net.http.HttpClient
+import java.net.http.HttpHeaders
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import java.nio.file.Path
 import java.time.Duration
 import java.time.Instant
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoField.NANO_OF_SECOND
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.PathWalkOption
@@ -115,19 +117,7 @@ class LinkChecker(private val root: Path) {
                     //Rate limiting: wait and retry
                     in HTTP_RATE_LIMIT -> {
                         val now = Instant.now()
-                        val await = response.headers()
-
-                            // todo Extract to method
-                            // https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#checking-your-rate-limit-status
-                            .map()["x-ratelimit-reset"]
-                            ?.asSequence()
-                            ?.map(String::toLong)?.map(Instant::ofEpochSecond)
-                            ?.map { Duration.between(now.with(NANO_OF_SECOND, 0), it) }
-                            ?.map(Duration::toMillis)
-                            ?.filter { it >= 0 }
-                            ?.firstOrNull()
-
-                            ?: 500
+                        val await = response.headers().rateLimitAwait(now) ?: 500
 
                         logger.debug("Await: $await ms")
                         Thread.sleep(await)
@@ -143,6 +133,40 @@ class LinkChecker(private val root: Path) {
         }
 
         private val HTTP_REDIRECT = setOf(301, 302, 307, 308)
-        private val HTTP_RATE_LIMIT = setOf(403)
+        private val HTTP_RATE_LIMIT = setOf(403, 429)
+
+        private fun HttpHeaders.rateLimitAwait(now: Instant): Long? {
+            val map = map()
+            return HTTP_RATE_LIMIT_EXTRACTORS
+                .flatMap { map[it.key]?.asSequence()?.map { v -> it.value(v.trim(), now) } ?: emptySequence() }
+                .filterNotNull()
+                .firstOrNull { it >= 0 }
+        }
+
+        private val HTTP_RATE_LIMIT_EXTRACTORS: Map<String, (String, Instant) -> Long?> = mapOf(
+            // https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#checking-your-rate-limit-status
+            "x-ratelimit-reset" to { value, now ->
+                value
+                    .toLong()
+                    .let(Instant::ofEpochSecond)
+                    .let { Duration.between(now.with(NANO_OF_SECOND, 0), it) }
+                    .let(Duration::toMillis)
+            },
+            // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Retry-After
+            "Retry-After" to { value, now ->
+                if (value.isDigit()) value.toLong()
+                else HTTP_DATE_FORMAT
+                    .parse(value, Instant::from)
+                    .let { Duration.between(now.with(NANO_OF_SECOND, 0), it) }
+                    .let(Duration::toMillis)
+            },
+        )
+
+        /**
+         * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date">Specification</a>
+         */
+        internal val HTTP_DATE_FORMAT = DateTimeFormatter.RFC_1123_DATE_TIME
+
+        private fun String.isDigit(): Boolean = this.all { it.isDigit() }
     }
 }
