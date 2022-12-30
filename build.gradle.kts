@@ -28,6 +28,7 @@ dependencies {
   implementation(libs.jackson.databind)
   implementation(libs.mockneat)
   implementation(libs.bundles.logger.api)
+  implementation(libs.okhttp.core)
 
   runtimeOnly(libs.logger.impl)
 
@@ -35,6 +36,7 @@ dependencies {
   testImplementation(platform(libs.junit))
   testImplementation("org.junit.jupiter:junit-jupiter-params")
   testImplementation(libs.assertj)
+  testImplementation(libs.okhttp.mock)
 
   jmhAnnotationProcessor(libs.jmh.ann)
 }

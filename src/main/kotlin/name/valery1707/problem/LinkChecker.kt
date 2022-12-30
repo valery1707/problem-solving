@@ -1,10 +1,9 @@
 package name.valery1707.problem
 
+import okhttp3.Headers
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpHeaders
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
 import java.nio.file.Path
 import java.time.Duration
 import java.time.Instant
@@ -24,7 +23,7 @@ class LinkChecker(private val root: Path) {
      * Сканируем все файлы из директории, ищем в тексте ссылки, проверяем их на доступность
      */
     @OptIn(ExperimentalPathApi::class)
-    fun findInvalid(client: HttpClient): Map<String, String> {
+    fun findInvalid(client: OkHttpClient): Map<String, String> {
         val filePos2uriCheck = root
             .walk(PathWalkOption.FOLLOW_LINKS)
             .map { root.relativize(it) }
@@ -104,27 +103,28 @@ class LinkChecker(private val root: Path) {
             null
         }
 
-        private fun URI.check(client: HttpClient): Pair<Int, URI> {
-            val request = HttpRequest.newBuilder(this).GET().build()
+        private fun URI.check(client: OkHttpClient): Pair<Int, URI> {
+            val request = Request.Builder().url(this.toURL()).get().build()
             // todo Cache
             return try {
                 logger.info("Check: $this")
-                val response = client.send(request, HttpResponse.BodyHandlers.discarding())
-                when (response.statusCode()) {
-                    //Redirects: extract new location
-                    in HTTP_REDIRECT -> response.statusCode() to response.headers().firstValue("Location")!!.get().toURI()!!
+                client.newCall(request).execute().use { response ->
+                    when (response.code) {
+                        //Redirects: extract new location
+                        in HTTP_REDIRECT -> response.code to response.header("Location")!!.toURI()!!
 
-                    //Rate limiting: wait and retry
-                    in HTTP_RATE_LIMIT -> {
-                        val now = Instant.now()
-                        val await = response.headers().rateLimitAwait(now) ?: 500
+                        //Rate limiting: wait and retry
+                        in HTTP_RATE_LIMIT -> {
+                            val now = Instant.now()
+                            val await = response.headers.rateLimitAwait(now) ?: 500
 
-                        logger.debug("Await: $await ms")
-                        Thread.sleep(await)
-                        check(client)
+                            logger.debug("Await: $await ms")
+                            Thread.sleep(await)
+                            check(client)
+                        }
+
+                        else -> response.code to response.request.url.toUri()
                     }
-
-                    else -> response.statusCode() to response.uri()
                 }
             } catch (e: Exception) {
                 logger.error(e) { "Handle error on checking $this" }
@@ -135,13 +135,10 @@ class LinkChecker(private val root: Path) {
         private val HTTP_REDIRECT = setOf(301, 302, 307, 308)
         private val HTTP_RATE_LIMIT = setOf(403, 429)
 
-        private fun HttpHeaders.rateLimitAwait(now: Instant): Long? {
-            val map = map()
-            return HTTP_RATE_LIMIT_EXTRACTORS
-                .flatMap { map[it.key]?.asSequence()?.map { v -> it.value(v.trim(), now) } ?: emptySequence() }
-                .filterNotNull()
-                .firstOrNull { it >= 0 }
-        }
+        private fun Headers.rateLimitAwait(now: Instant): Long? = HTTP_RATE_LIMIT_EXTRACTORS
+            .flatMap { values(it.key).asSequence().map { v -> it.value(v.trim(), now) } }
+            .filterNotNull()
+            .firstOrNull { it >= 0 }
 
         private val HTTP_RATE_LIMIT_EXTRACTORS: Map<String, (String, Instant) -> Long?> = mapOf(
             // https://docs.github.com/en/rest/overview/resources-in-the-rest-api?apiVersion=2022-11-28#checking-your-rate-limit-status

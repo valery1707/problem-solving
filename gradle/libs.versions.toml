@@ -14,6 +14,8 @@ jmh-ann = { module = "org.openjdk.jmh:jmh-generator-annprocess", version.ref = "
 logger-api4j = { module = "org.slf4j:slf4j-api", version = "2.0.6" }
 logger-api4k = { module = "io.github.microutils:kotlin-logging-jvm", version = "3.0.4" }
 logger-impl = { module = "ch.qos.logback:logback-classic", version = "1.4.5" }
+okhttp-core = { module = "com.squareup.okhttp3:okhttp", version = "4.10.0" }
+okhttp-mock = { module = "com.github.gmazzo:okhttp-mock", version = "1.5.0" }
 
 [bundles]
 logger-api = ["logger.api4j", "logger.api4k"]
