@@ -1,7 +1,7 @@
 // Remove when https://youtrack.jetbrains.com/issue/KTIJ-19369 and https://github.com/gradle/gradle/issues/22797 are fixed
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-  kotlin("jvm") version libs.versions.kotlin
+  kotlin("jvm") version 1.8.0
   alias(libs.plugins.jmh)
   alias(libs.plugins.consistent.versions)
   alias(libs.plugins.kover)
