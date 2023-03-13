@@ -8,7 +8,7 @@ jmh-tools = "1.36"
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 junit = { module = "org.junit:junit-bom", version.ref = "junit" }
-assertj = { module = "org.assertj:assertj-core", version = "3.23.1" }
+assertj = { module = "org.assertj:assertj-core", version = "3.24.2" }
 mockneat = { module = "net.andreinc:mockneat", version = "0.4.8" }
 jmh-ann = { module = "org.openjdk.jmh:jmh-generator-annprocess", version.ref = "jmh.tools" }
 
