@@ -1,7 +1,7 @@
 [versions]
 kotlin = "1.7.22"
 jackson = "2.14.1"
-junit = "5.9.1"
+junit = "5.9.2"
 jmh-plugin = "0.6.8"
 jmh-tools = "1.36"
 
