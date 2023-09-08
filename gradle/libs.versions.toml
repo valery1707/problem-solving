@@ -17,5 +17,5 @@ jmh-ann = { module = "org.openjdk.jmh:jmh-generator-annprocess", version.ref = "
 [plugins]
 jmh = { id = "me.champeau.jmh", version = "0.6.8" }
 kover = { id = "org.jetbrains.kotlinx.kover", version = "0.6.1" }
-sonarqube = { id = "org.sonarqube", version = "3.4.0.2513" }
+sonarqube = { id = "org.sonarqube", version = "4.0.0.2929" }
 consistent-versions = { id = "com.palantir.consistent-versions", version = "2.11.0" }
